@@ -1,0 +1,20 @@
+.navbar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+hr{
+  margin: 0;
+}
+
+.links{
+  margin-top: 50px;
+}
+
+.copyright{
+  font-size: 14px;
+  margin-left: -6px;
+  text-align: center;
+}
