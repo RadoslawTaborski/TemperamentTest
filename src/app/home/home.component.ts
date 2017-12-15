@@ -88,10 +88,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
           ++temperament[1];
         break;
         case Temperament.melancholik:
-          ++temperament[1];
+          ++temperament[2];
         break;
         case Temperament.flegmatyk:
-          ++temperament[1];
+          ++temperament[3];
         break;
       }
     }
