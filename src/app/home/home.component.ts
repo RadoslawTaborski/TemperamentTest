@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Question } from './home.question';
-import { Answer } from './home.question';
+import { Questions } from './home.questions';
 import { SharedService } from "../shared.service";
 
 @Component({
@@ -11,7 +10,7 @@ import { SharedService } from "../shared.service";
 export class HomeComponent implements OnInit, AfterViewInit {
   isLoaded = false;
   showQuestions = false;
-  questionsArray: Question[]=[];
+  questionsArray: Questions=new Questions();
   addedAllAnswers: Boolean=false;
   info: String="";
 
@@ -19,14 +18,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
       this.isLoaded = true;
-      this.questionsArray.push(new Question("Jesteś najlepszy?", [
-        new Answer("Tak", true),
-        new Answer("Nie", false)
-      ]));
+      this.questionsArray.ReadJson(SharedService.json);
   }
 
   questions() {
-    return this.questionsArray;
+    return this.questionsArray.Questions;
   }
 
   start(){
@@ -40,7 +36,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   check(){
     console.log(this.questionsArray);
     let tmp =true;
-    this.questionsArray.forEach(element => {
+    this.questionsArray.Questions.forEach(element => {
       if(element.checked==false){
         tmp=false;
       }
@@ -57,7 +53,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getConclusion(){
-    if(this.questionsArray[0].answer.value==true)
+    if(this.questionsArray.Questions[0].answer.value==true)
       return "Jesteś najlepszy i znajdziesz pracę wszędzie";
     else
       return "Jesteś do niczego i rzuć się z mostu";
