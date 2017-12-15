@@ -29,12 +29,19 @@ export class Question {
 
 export class Answer {
     answer: string = "";
-    value: boolean = false;
+    value: Temperament;
     state: number = 0;
     checked: boolean = false;
 
-    constructor(answer: string, value: boolean) {
+    constructor(answer: string, value: string) {
         this.answer = answer;
-        this.value = value;
+        this.value = Temperament[value];
     }
+}
+
+export enum Temperament{
+    sangwinik = 0,
+    choleryk = 1,
+    melancholik= 2,
+    flegmatyk = 3
 }

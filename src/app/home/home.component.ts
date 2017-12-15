@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Questions } from './home.questions';
 import { SharedService } from "../shared.service";
+import { Temperament } from 'app/home/home.question';
 
 @Component({
   selector: 'app-home',
@@ -52,11 +53,40 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
+  setTemperament():Temperament{
+    let temperament:number[]=[0,0,0,0];
+    for (let item of this.questionsArray.Questions){
+      switch(item.answer.value){
+        case Temperament.sangwinik:
+          ++temperament[0];
+        break;
+        case Temperament.choleryk:
+          ++temperament[1];
+        break;
+        case Temperament.melancholik:
+          ++temperament[1];
+        break;
+        case Temperament.flegmatyk:
+          ++temperament[1];
+        break;
+      }
+    }
+    let i = temperament.indexOf(Math.max(...temperament));
+    return Temperament[Temperament[i]];
+  }
+
   getConclusion(){
-    if(this.questionsArray.Questions[0].answer.value==true)
-      return "Jesteś najlepszy i znajdziesz pracę wszędzie";
-    else
-      return "Jesteś do niczego i rzuć się z mostu";
+    let temp=this.setTemperament();
+    switch(temp){
+      case Temperament.sangwinik:
+        return "Jesteś sangwinikiem";
+      case Temperament.choleryk:
+        return "Jesteś cholerykiem";
+      case Temperament.melancholik:
+        return "Jesteś melancholikiem";
+      case Temperament.flegmatyk:
+        return "Jesteś flegmatyk";
+    }
   }
 
 }

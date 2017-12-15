@@ -13,7 +13,7 @@ export class Questions {
             
             let answers:Answer[]=[];
             for(let item of entry.question.answers){
-                answers.push(new Answer(item.answer,item.value=="true"?true:false))
+                answers.push(new Answer(item.answer,item.value))
             }
             
             this.Questions.push(new Question(entry.question.question, answers));
