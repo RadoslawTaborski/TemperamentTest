@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   private bgNavbar = false;
   private homeControler = false;
 
-  appName = "Testownik";
+  appName = "Test Temperamentu";
 
   constructor(private router: Router) {
     console.log("MyComp.constructor");
