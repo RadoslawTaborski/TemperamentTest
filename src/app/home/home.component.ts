@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Questions } from './home.questions';
 import { SharedService } from "../shared.service";
-import { Temperament } from 'app/home/home.question';
+import { Temperament, Question } from 'app/home/home.question';
 
 @Component({
   selector: 'app-home',
@@ -14,16 +14,34 @@ export class HomeComponent implements OnInit, AfterViewInit {
   questionsArray: Questions=new Questions();
   addedAllAnswers: Boolean=false;
   info: String="";
+  id:number=0;
+  question: Question=null;
+  counter: number=0;
 
   constructor() { }
 
   ngOnInit() {
-      this.isLoaded = true;
       this.questionsArray.ReadJson(SharedService.json);
+      this.question=this.questionsArray.Questions[0];
+      this.isLoaded = true;
   }
 
-  questions() {
-    return this.questionsArray.Questions;
+  nextQuestion() {
+    if(this.id<this.questionsArray.Questions.length-1){
+      this.id++
+      this.question=this.questionsArray.Questions[this.id];
+    }
+  }
+
+  actualQuestion() {
+    return this.question;
+  }
+
+  backQuestion() {
+    if(this.id>0){
+      this.id--
+      this.question=this.questionsArray.Questions[this.id];
+    }
   }
 
   start(){
@@ -35,22 +53,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   check(){
-    console.log(this.questionsArray);
     let tmp =true;
+    this.counter=this.questionsArray.Questions.length;
     this.questionsArray.Questions.forEach(element => {
       if(element.checked==false){
         tmp=false;
+        this.counter--;
       }
     })
+    this.info="Oddano odpowiedź na "+ this.counter + " z "+this.questionsArray.Questions.length;
     if(tmp==true)
     {
-      this.addedAllAnswers=true;
-      this.showQuestions=false;
-      this.info="";
+      return true;
     }else{
       this.addedAllAnswers=false;
-      this.info="Oddaj odpowiedzi na wszystkie pytania";
+      return false;
     }
+  }
+
+  displayResult(){
+    this.addedAllAnswers=true;
+    this.showQuestions=false;
+    this.info="";
   }
 
   setTemperament():Temperament{
