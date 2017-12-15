@@ -35,13 +35,26 @@ export class Answer {
 
     constructor(answer: string, value: string) {
         this.answer = answer;
-        this.value = Temperament[value];
+        switch(value){
+            case "sangwinik":
+            this.value=Temperament.Sanguine;
+            break;
+            case "choleryk":
+            this.value=Temperament.Choleric;
+            break;
+            case "melancholik":
+            this.value=Temperament.Melancholic;
+            break;
+            case "flegmatyk":
+            this.value=Temperament.Phlegmatic;
+            break;
+        }
     }
 }
 
 export enum Temperament{
-    sangwinik = 0,
-    choleryk = 1,
-    melancholik= 2,
-    flegmatyk = 3
+    Sanguine = 0,
+    Choleric = 1,
+    Melancholic= 2,
+    Phlegmatic = 3
 }

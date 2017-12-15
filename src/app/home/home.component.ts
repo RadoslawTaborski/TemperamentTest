@@ -81,16 +81,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let temperament:number[]=[0,0,0,0];
     for (let item of this.questionsArray.Questions){
       switch(item.answer.value){
-        case Temperament.sangwinik:
+        case Temperament.Sanguine:
           ++temperament[0];
         break;
-        case Temperament.choleryk:
+        case Temperament.Choleric:
           ++temperament[1];
         break;
-        case Temperament.melancholik:
+        case Temperament.Melancholic:
           ++temperament[2];
         break;
-        case Temperament.flegmatyk:
+        case Temperament.Phlegmatic:
           ++temperament[3];
         break;
       }
@@ -102,13 +102,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getConclusion(){
     let temp=this.setTemperament();
     switch(temp){
-      case Temperament.sangwinik:
+      case Temperament.Sanguine:
         return "Jesteś sangwinikiem";
-      case Temperament.choleryk:
+      case Temperament.Choleric:
         return "Jesteś cholerykiem";
-      case Temperament.melancholik:
+      case Temperament.Melancholic:
         return "Jesteś melancholikiem";
-      case Temperament.flegmatyk:
+      case Temperament.Phlegmatic:
         return "Jesteś flegmatyk";
     }
   }
