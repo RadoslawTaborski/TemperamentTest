@@ -3,9 +3,56 @@ import { Question } from './home/home.question';
 
 @Injectable()
 export class SharedService {
+    static json2:string="{\
+        \"temperaments\": [\{\
+            \"temperament\": \{\
+                \"name\": \"sangwinik\",\
+                \"description\": \"tzw. pociągająca osobowość, lubi gawędzić, dusza towarzystwa, poczucie humoru, pamięć do kolorów, emocjonalny, wylewny, entuzjastyczny, wesoły, spontaniczny, ciekawy, urodzony aktor, prostoduszny, żyje ?tu i teraz?, zmienne usposobienie, szczerość serca, wieczne dziecko.\",\
+                \"jobs\": [\
+                ]\
+            \}\
+        \},\{\
+            \"temperament\": \{\
+                \"name\": \"choleryk\",\
+                \"description\": \"Urodzony lider, dynamiczny i aktywny, wykazuje nieodpartą potrzebę zmian, silna wola i zdecydowanie, nie ulega emocjom, trudno go zniechęcić, niezależny i samowystarczalny, wzbudza zaufanie, wszystkim pokieruje\",\
+                \"jobs\": [\
+                ]\
+            \}\
+        \},\{\
+            \"temperament\": \{\
+                \"name\": \"melancholik\",\
+                \"description\": \"głęboki i refleksyjny, analityczny, poważny, dąży do obranego celu, utalentowany, twórczy, ma zdolności muzyczne lub artystyczne, filozofujący, poetyczny, ceni piękno, wrażliwy na potrzeby innych, skłonny do poświęceń, sumienny, idealista.\",\
+                \"jobs\": [\
+                ]\
+            \}\
+        \},\{\
+            \"temperament\": \{\
+                \"name\": \"flegmatyk\",\
+                \"description\": \"Powściągliwy, niewymagający, spokojny, chłodny, opanowany, cierpliwy i zrównoważony, zgodny, cichy, życzliwy i uprzejmy, ukrywa emocje, cieszy się życiem, wszędzie pasuje - uniwersalny.\",\
+                \"jobs\": [\
+                ]\
+            \}\
+        \}]\
+    \}";
+
+    static json3:string="{\
+        \"jobs\": [\{\
+            \"job\": \{\
+                \"name\": \"prawnik\",\
+                \"characteristics\": [\
+                    \"śmieciarz\", \"dupek\"\
+                ]\
+                \"temperaments\": [\
+                    \"śmieciarz\", \"dupek\"\
+                ]\
+            \}\
+        \}]\
+    \}";
+
     static json:string="{\
         \"questions\": [\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"żywy\",\
@@ -23,6 +70,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"wesoły\",\
@@ -40,6 +88,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"towarzyski\",\
@@ -57,6 +106,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"urzekający\",\
@@ -74,6 +124,7 @@ export class SharedService {
             \}\
         \} ,\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"pokrzepiający \",\
@@ -91,6 +142,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"pełen werwy \",\
@@ -108,6 +160,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"promotor \",\
@@ -125,6 +178,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"spontaniczny \",\
@@ -142,6 +196,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"optymista \",\
@@ -159,6 +214,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"dowcipny \",\
@@ -176,6 +232,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"czarujący \",\
@@ -193,6 +250,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"pogodny \",\
@@ -210,6 +268,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"inspirator \",\
@@ -227,6 +286,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"wylewny \",\
@@ -244,6 +304,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"towarzyski \",\
@@ -261,6 +322,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"rozmowny \",\
@@ -278,6 +340,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"energiczny \",\
@@ -295,6 +358,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"ujmujący \",\
@@ -312,6 +376,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"popularny \",\
@@ -329,6 +394,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"żywiołowy \",\
@@ -346,6 +412,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"buńczuczny \",\
@@ -363,6 +430,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"niezdyscyplinowany \",\
@@ -380,6 +448,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"powtarzającysię \",\
@@ -397,6 +466,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"zapominalski \",\
@@ -414,6 +484,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"wtrącający  się \",\
@@ -431,6 +502,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"niestały \",\
@@ -448,6 +520,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"chaotyczny \",\
@@ -465,6 +538,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"na wszystko pozwala \",\
@@ -482,6 +556,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"złośnik \",\
@@ -499,6 +574,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"naiwny \",\
@@ -516,6 +592,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"lizus \",\
@@ -533,6 +610,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"gadatliwy \",\
@@ -550,6 +628,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"niezorganizowany \",\
@@ -567,6 +646,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"niestały \",\
@@ -584,6 +664,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"bałaganiarz \",\
@@ -601,6 +682,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"próżny \",\
@@ -618,6 +700,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"donośny \",\
@@ -635,6 +718,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"roztargniony \",\
@@ -652,6 +736,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"niespokojny \",\
@@ -669,6 +754,7 @@ export class SharedService {
             \}\
         \},\{\
             \"question\": \{\
+                \"type\": \"temperament\",\
                 \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
                 \"answers\": [\{\
                     \"answer\": \"zmienny \",\
@@ -683,6 +769,174 @@ export class SharedService {
                     \"answer\": \"ugodowiec \",\
                     \"value\": \"flegmatyk\"\
                 \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz uzdolnienia manualne\",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz dobre wyczucie kierunku\",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz umiejętność rozwiązywania sporów między przyjaciółmi \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Łatwo zapamiętujesz słowa piosenek \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz wyjaśniać w prosty sposób trudne zagadnienia \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Robisz wszystko krok po kroku \",\
+                \"value\": \"matematyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Dobrze znasz samego siebie i rozumiesz swoje postępowanie \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz ćwiczenia grupowe i spotkania towarzyskie \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Dobrze uczysz się słuchając wykładów i wywodów innych ludzi \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Słuchając muzyki doznajesz zmian nastroju \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz krzyżówki, łamigłówki i problemy logiczne \",\
+                \"value\": \"matematyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Tablice, zestawienia i pomoce wizualne pomagają Ci w uczeniu się \",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Jesteś wrażliwy na nastroje i uczucia otaczających Ciebie ludzi \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Najlepiej uczysz się, kiedy wiesz że jesteś odpowiedzialny za wynik swojej pracy \",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Zanim zechcesz się czegoś nauczyć musisz zobaczyć, że będziesz miał z tego jakąś korzyść \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Podczas nauki i rozmyślań lubisz spokój i samotność \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz usłyszeć poszczególne instrumenty w złożonych utworach muzycznych \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Łatwo przychodzi Ci wywołanie w wyobraźni zapamiętanych i wymyślonych obrazów \",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz bogaty zasób słownictwa i potrafisz się nim posługiwać \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz robić notatki \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz dobre poczucie równowagi i lubisz ruch fizyczny \",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz dostrzegać strukturę przedmiotów i związki między różnymi rzeczami \",\
+                \"value\": \"matematyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz pracować w zespole i korzystać z cudzych doświadczeń \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Jesteś dobrym obserwatorem i często zauważasz rzeczy uchodzące uwadze innych \",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Często bywasz niespokojny \",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz pracować lub uczyć się niezależnie od innych \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz komponować muzykę \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz radzić sobie z licznymi problemami matematycznymi \",\
+                \"value\": \"matematyczna\"\
             \}\
         \}]\
     \}";

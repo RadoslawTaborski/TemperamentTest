@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Questions } from './home.questions';
 import { Person } from './home.person';
+import { Characteristics } from './home.enums';
 import { SharedService } from "../shared.service";
-import { Temperament, Question } from 'app/home/home.question';
+import { Question } from 'app/home/home.question';
 
 @Component({
   selector: 'app-home',
@@ -12,20 +13,20 @@ import { Temperament, Question } from 'app/home/home.question';
 export class HomeComponent implements OnInit, AfterViewInit {
   isLoaded = false;
   showQuestions = false;
-  questionsArray: Questions=new Questions();
-  addedAllAnswers: Boolean=false;
-  info: String="";
-  id:number;
+  questionsArray: Questions = new Questions();
+  addedAllAnswers: Boolean = false;
+  info: String = "";
+  id: number;
   question: Question;
-  counter: number=0;
+  counter: number = 0;
   person: Person;
-  conclusion:string;
+  conclusion: string;
 
   constructor(private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-      this.isLoaded = true;
+    this.isLoaded = true;
   }
 
   ngAfterViewInit() {
@@ -37,9 +38,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   nextQuestion() {
-    if(this.id<this.questionsArray.Questions.length-1){
+    if (this.id < this.questionsArray.Questions.length - 1) {
       this.id++
-      this.question=this.questionsArray.Questions[this.id];
+      this.question = this.questionsArray.Questions[this.id];
     }
   }
 
@@ -48,103 +49,128 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   backQuestion() {
-    if(this.id>0){
+    if (this.id > 0) {
       this.id--
-      this.question=this.questionsArray.Questions[this.id];
+      this.question = this.questionsArray.Questions[this.id];
     }
   }
 
-  start(){
-    this.conclusion="";
-    this.info="";
-    this.addedAllAnswers=false;
-    this.id=0;
-    this.person=new Person();
+  start() {
+    this.conclusion = "";
+    this.info = "";
+    this.addedAllAnswers = false;
+    this.id = 0;
+    this.person = new Person();
     this.questionsArray.ReadJson(SharedService.json);
-    this.question=this.questionsArray.Questions[0];
-    this.showQuestions=true;
+    this.question = this.questionsArray.Questions[0];
+    this.showQuestions = true;
   }
 
-  check(){
-    let tmp =true;
-    this.counter=this.questionsArray.Questions.length;
+  check() {
+    let tmp = true;
+    this.counter = this.questionsArray.Questions.length;
     this.questionsArray.Questions.forEach(element => {
-      if(element.checked==false){
-        tmp=false;
+      if (element.checked == false) {
+        tmp = false;
         this.counter--;
       }
     })
-    this.info="Oddano odpowiedź na "+ this.counter + " z "+this.questionsArray.Questions.length;
-    if(tmp==true)
-    {
+    this.info = "Oddano odpowiedź na " + this.counter + " z " + this.questionsArray.Questions.length;
+    if (tmp == true) {
       return true;
-    }else{
-      this.addedAllAnswers=false;
+    } else {
+      this.addedAllAnswers = false;
       return false;
     }
   }
 
-  displayResult(){
-    this.addedAllAnswers=true;
-    this.showQuestions=false;
-    this.info="";
-    this.conclusion=this.getConclusion();
+  displayResult() {
+    this.addedAllAnswers = true;
+    this.showQuestions = false;
+    this.info = "";
+    this.conclusion = this.getConclusion();
   }
 
-  setTemperaments(){
-    let temperament:number[]=[0,0,0,0];
-    for (let item of this.questionsArray.Questions){
-      switch(item.answer.value){
-        case Temperament.Sanguine:
+  setCharacteristics() {
+    let temperament: number[] = [0, 0, 0, 0];
+    let intelligence: number[] = [0, 0, 0, 0, 0, 0, 0];
+    for (let item of this.questionsArray.Questions) {
+      switch (item.answer.type) {      
+        case Characteristics.Sanguine:
           ++temperament[0];
-        break;
-        case Temperament.Choleric:
+          break;
+        case Characteristics.Choleric:
           ++temperament[1];
-        break;
-        case Temperament.Melancholic:
+          break;
+        case Characteristics.Melancholic:
           ++temperament[2];
-        break;
-        case Temperament.Phlegmatic:
+          break;
+        case Characteristics.Phlegmatic:
           ++temperament[3];
-        break;
+          break;
+        case Characteristics.Matematical:
+          intelligence[0] += item.answer.value;
+          break;
+        case Characteristics.Linguistic:
+          intelligence[1] += item.answer.value;
+          break;
+        case Characteristics.Visual:
+          intelligence[2] += item.answer.value;
+          break;
+        case Characteristics.Kinesthetic:
+          intelligence[3] += item.answer.value;
+          break;
+        case Characteristics.Musical:
+          intelligence[4] += item.answer.value;
+          break;
+        case Characteristics.Interpersonal:
+          intelligence[5] += item.answer.value;
+          break;
+        case Characteristics.Intrapersonal:
+          intelligence[6] += item.answer.value;
+          break;
       }
     }
 
-    this.person.setTemperaments(temperament[0],temperament[1],temperament[2],temperament[3],this.questionsArray.Questions.length);
+    this.person.setTemperaments(temperament, 40);
+    this.person.setIntelligences(intelligence, 20);
   }
 
-  getConclusion(){
-    this.setTemperaments();
-    let tmp=this.person.sortTemperaments();
-    
-    let text="Jesteś:\r\n\t"+
-              tmp[0].value+"% "+tmp[0].name + "iem\r\n\t"+
-              tmp[1].value+"% "+tmp[1].name + "iem\r\n\t"+
-              tmp[2].value+"% "+tmp[2].name + "iem\r\n\t"+
-              tmp[3].value+"% "+tmp[3].name + "iem\r\n";
-   
-    if((tmp[0].value-tmp[1].value)>30){
-      text+="Twoim dominującym temperamentem jest "+tmp[0].name+".";
-    }else{
-      if((tmp[1].value-tmp[2].value)<=20){
-        if((tmp[2].value-tmp[3].value)<=10){
-          text+="Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.";
-        }else{
-          text+="Nie masz dominującego temperamentu, łączysz cechy "+tmp[0].name + "a, " +tmp[1].name+"a i " +tmp[2].name+"a.";
+  getConclusion() {
+    this.setCharacteristics();
+    let tmp = this.person.sortTemperaments();
+    let tmp2 = this.person.sortIntelligences();
+
+    console.log(this.person);
+
+    let text = "Jesteś:\r\n\t" +
+      tmp[0].value + "% " + tmp[0].name + "iem\r\n\t" +
+      tmp[1].value + "% " + tmp[1].name + "iem\r\n\t" +
+      tmp[2].value + "% " + tmp[2].name + "iem\r\n\t" +
+      tmp[3].value + "% " + tmp[3].name + "iem\r\n";
+
+    if ((tmp[0].value - tmp[1].value) > 30) {
+      text += "Twoim dominującym temperamentem jest " + tmp[0].name + ".";
+    } else {
+      if ((tmp[1].value - tmp[2].value) <= 20) {
+        if ((tmp[2].value - tmp[3].value) <= 10) {
+          text += "Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.";
+        } else {
+          text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a, " + tmp[1].name + "a i " + tmp[2].name + "a.";
         }
-      }else{
-        text+="Nie masz dominującego temperamentu, łączysz cechy "+tmp[0].name + "a i " +tmp[1].name+"a.";
+      } else {
+        text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a i " + tmp[1].name + "a.";
       }
     }
 
-    text=this.stringToHtmlString(text);
+    text = this.stringToHtmlString(text);
     return text;
   }
 
-  stringToHtmlString(text:string){
-    let result="<br>"+text+"</br>";
-    result=result.replace(/\r\n/g,"</br><br>");
-    result=result.replace(/\t/g,"&emsp;");
+  stringToHtmlString(text: string) {
+    let result = "<br>" + text + "</br>";
+    result = result.replace(/\r\n/g, "</br><br>");
+    result = result.replace(/\t/g, "&emsp;");
 
     return result;
   }
