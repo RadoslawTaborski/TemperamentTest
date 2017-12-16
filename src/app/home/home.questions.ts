@@ -25,8 +25,8 @@ export class Questions {
             for(let item of obj.questions[i].question.answers){
                 answers.push(new Answer(item.answer,item.value))
             }
-            
+            answers=SharedService.shuffle(answers);
             this.Questions.push(new Question(obj.questions[i].question.question, answers));
         }
-    }
+    }  
 }
