@@ -46,7 +46,7 @@
     <button class="btn btn-primary pull-right" *ngIf="!check()" (click)="displayResult()" disabled>Sprawdź wyniki<i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 </div>
 
-<div [innerHTML]="getConclusion()" class="list-group container" style="padding-left: 0.8em;" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
+<div [innerHTML]="conclusion" class="list-group container" style="padding-left: 0.8em;" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
 </div>
 
 <hr>

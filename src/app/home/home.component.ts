@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Questions } from './home.questions';
+import { Person } from './home.person';
 import { SharedService } from "../shared.service";
 import { Temperament, Question } from 'app/home/home.question';
 
@@ -14,16 +15,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
   questionsArray: Questions=new Questions();
   addedAllAnswers: Boolean=false;
   info: String="";
-  id:number=0;
-  question: Question=null;
+  id:number;
+  question: Question;
   counter: number=0;
+  person: Person;
+  conclusion:string;
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
-      this.questionsArray.ReadJson(SharedService.json);
-      this.question=this.questionsArray.Questions[0];
       this.isLoaded = true;
+  }
+
+  ngAfterViewInit() {
+    this.cd.detectChanges();
+  }
+
+  ngAfterContentChecked() {
+    this.cd.detectChanges();
   }
 
   nextQuestion() {
@@ -45,11 +55,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   start(){
+    this.conclusion="";
+    this.info="";
+    this.addedAllAnswers=false;
+    this.id=0;
+    this.person=new Person();
+    this.questionsArray.ReadJson(SharedService.json);
+    this.question=this.questionsArray.Questions[0];
     this.showQuestions=true;
-  }
-
-  ngAfterViewInit() {
-
   }
 
   check(){
@@ -75,9 +88,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.addedAllAnswers=true;
     this.showQuestions=false;
     this.info="";
+    this.conclusion=this.getConclusion();
   }
 
-  setTemperament():number[]{
+  setTemperaments(){
     let temperament:number[]=[0,0,0,0];
     for (let item of this.questionsArray.Questions){
       switch(item.answer.value){
@@ -95,17 +109,35 @@ export class HomeComponent implements OnInit, AfterViewInit {
         break;
       }
     }
-    return temperament;
+
+    this.person.setTemperaments(temperament[0],temperament[1],temperament[2],temperament[3],this.questionsArray.Questions.length);
   }
 
   getConclusion(){
-    let temp=this.setTemperament();
-    for(let i=0; i<temp.length;++i){
-      temp[i]*=100/this.questionsArray.Questions.length;
+    this.setTemperaments();
+    let tmp=this.person.sortTemperaments();
+    
+    let text="Jesteś:\r\n\t"+
+              tmp[0].value+"% "+tmp[0].name + "iem\r\n\t"+
+              tmp[1].value+"% "+tmp[1].name + "iem\r\n\t"+
+              tmp[2].value+"% "+tmp[2].name + "iem\r\n\t"+
+              tmp[3].value+"% "+tmp[3].name + "iem\r\n";
+   
+    if((tmp[0].value-tmp[1].value)>30){
+      text+="Twoim dominującym temperamentem jest "+tmp[0].name+".";
+    }else{
+      if((tmp[1].value-tmp[2].value)<=20){
+        if((tmp[2].value-tmp[3].value)<=10){
+          text+="Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.";
+        }else{
+          text+="Nie masz dominującego temperamentu, łączysz cechy "+tmp[0].name + "a, " +tmp[1].name+"a i " +tmp[2].name+"a.";
+        }
+      }else{
+        text+="Nie masz dominującego temperamentu, łączysz cechy "+tmp[0].name + "a i " +tmp[1].name+"a.";
+      }
     }
-    let text="Jesteś:\r\n\t"+temp[0]+"% sangwinikiem\r\n\t"+temp[1]+"% cholerykiem\r\n\t"+temp[2]+"% melancholikiem\r\n\t"+temp[3]+"% flegmatykiem";
+
     text=this.stringToHtmlString(text);
-    console.log(text);
     return text;
   }
 

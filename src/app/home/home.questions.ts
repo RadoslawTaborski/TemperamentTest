@@ -4,9 +4,10 @@ import { Answer } from "./home.question";
 import { forEach } from "@angular/router/src/utils/collection";
 
 export class Questions {
-    Questions: Question[] = [];
+    Questions: Question[];
 
     ReadJson(json:string) {
+        this.Questions=[];
         let obj=JSON.parse(json);
         
         /*for (let entry of obj.questions){
@@ -19,13 +20,13 @@ export class Questions {
             this.Questions.push(new Question(entry.question.question, answers));
         }*/
 
-        for (let i=0;i<5;++i){
+        for (let i=0;i<5;++i){ 
             
             let answers:Answer[]=[];
             for(let item of obj.questions[i].question.answers){
                 answers.push(new Answer(item.answer,item.value))
             }
-            answers=SharedService.shuffle(answers);
+           // answers=SharedService.shuffle(answers);
             this.Questions.push(new Question(obj.questions[i].question.question, answers));
         }
     }  
