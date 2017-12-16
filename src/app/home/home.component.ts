@@ -132,8 +132,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.person.setTemperaments(temperament, 40);
-    this.person.setIntelligences(intelligence, 20);
+    this.person.setTemperaments(temperament, this.questionsArray.temperamentQuestions);
+    this.person.setIntelligences(intelligence, this.questionsArray.intelligenceQuestions/7*5);
   }
 
   getConclusion() {
@@ -150,16 +150,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
       tmp[3].value + "% " + tmp[3].name + "iem\r\n";
 
     if ((tmp[0].value - tmp[1].value) > 30) {
-      text += "Twoim dominującym temperamentem jest " + tmp[0].name + ".";
+      text += "Twoim dominującym temperamentem jest " + tmp[0].name + ".\r\n";
     } else {
       if ((tmp[1].value - tmp[2].value) <= 20) {
         if ((tmp[2].value - tmp[3].value) <= 10) {
-          text += "Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.";
+          text += "Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.\r\n";
         } else {
-          text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a, " + tmp[1].name + "a i " + tmp[2].name + "a.";
+          text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a, " + tmp[1].name + "a i " + tmp[2].name + "a.\r\n";
         }
       } else {
-        text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a i " + tmp[1].name + "a.";
+        text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a i " + tmp[1].name + "a.\r\n";
+      }
+    }
+
+    text += "Twoje dobrze rozwinięte inteligencje to:\r\n"
+    for(let item of tmp2){
+      if(item.value>60){
+        text+="\t- inteligencja "+item.name+"\r\n";
       }
     }
 

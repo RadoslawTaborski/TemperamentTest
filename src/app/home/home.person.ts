@@ -10,30 +10,23 @@ export class Person {
         this.temperaments.push(new Characteristic("choleryk"));
         this.temperaments.push(new Characteristic("melancholik"));
         this.temperaments.push(new Characteristic("flegmatyk"));
-        this.intelligences.push(new Characteristic("matematyk"));
-        this.intelligences.push(new Characteristic("językowiec"));
-        this.intelligences.push(new Characteristic("wzrokowiec"));
-        this.intelligences.push(new Characteristic("ruchowiec"));
-        this.intelligences.push(new Characteristic("muzyk"));
-        this.intelligences.push(new Characteristic("osoba interpersonalna"));
-        this.intelligences.push(new Characteristic("osoba intrapersonalna"));
+        this.intelligences.push(new Characteristic("matematyczno-logiczna"));
+        this.intelligences.push(new Characteristic("językowa"));
+        this.intelligences.push(new Characteristic("wizualno-przestrzenna"));
+        this.intelligences.push(new Characteristic("kinestetyczna"));
+        this.intelligences.push(new Characteristic("muzyczna"));
+        this.intelligences.push(new Characteristic("interpersonalna"));
+        this.intelligences.push(new Characteristic("intrapersonalna"));
     }
 
     setTemperaments(array:number[],all:number){
-        this.temperaments[0].setValue(array[0]*100/all);
-        this.temperaments[1].setValue(array[1]*100/all);
-        this.temperaments[2].setValue(array[2]*100/all);
-        this.temperaments[3].setValue(array[3]*100/all);
+        for(let i=0;i<this.temperaments.length;++i)
+            this.temperaments[i].setValue(Math.round(array[i]*100/all * 100) / 100);
     }
 
     setIntelligences(array:number[],all:number){
-        this.intelligences[0].setValue(array[0]*100/all);
-        this.intelligences[1].setValue(array[1]*100/all);
-        this.intelligences[2].setValue(array[2]*100/all);
-        this.intelligences[3].setValue(array[3]*100/all);
-        this.intelligences[4].setValue(array[4]*100/all);
-        this.intelligences[5].setValue(array[5]*100/all);
-        this.intelligences[6].setValue(array[6]*100/all);
+        for(let i=0;i<this.intelligences.length;++i)
+            this.intelligences[i].setValue(Math.round(array[i]*100/all * 100) / 100);
     }
 
     sortTemperaments():Characteristic[]{
