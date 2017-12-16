@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.info="";
   }
 
-  setTemperament():Temperament{
+  setTemperament():number[]{
     let temperament:number[]=[0,0,0,0];
     for (let item of this.questionsArray.Questions){
       switch(item.answer.value){
@@ -95,22 +95,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
         break;
       }
     }
-    let i = temperament.indexOf(Math.max(...temperament));
-    return Temperament[Temperament[i]];
+    return temperament;
   }
 
   getConclusion(){
     let temp=this.setTemperament();
-    switch(temp){
-      case Temperament.Sanguine:
-        return "Jesteś sangwinikiem";
-      case Temperament.Choleric:
-        return "Jesteś cholerykiem";
-      case Temperament.Melancholic:
-        return "Jesteś melancholikiem";
-      case Temperament.Phlegmatic:
-        return "Jesteś flegmatyk";
+    for(let i=0; i<temp.length;++i){
+      temp[i]*=100/this.questionsArray.Questions.length;
     }
+    let text="Jesteś:\r\n\t"+temp[0]+"% sangwinikiem\r\n\t"+temp[1]+"% cholerykiem\r\n\t"+temp[2]+"% melancholikiem\r\n\t"+temp[3]+"% flegmatykiem";
+    text=this.stringToHtmlString(text);
+    console.log(text);
+    return text;
+  }
+
+  stringToHtmlString(text:string){
+    let result="<br>"+text+"</br>";
+    result=result.replace(/\r\n/g,"</br><br>");
+    result=result.replace(/\t/g,"&emsp;");
+
+    return result;
   }
 
 }

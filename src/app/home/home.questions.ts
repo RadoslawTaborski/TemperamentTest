@@ -9,7 +9,7 @@ export class Questions {
     ReadJson(json:string) {
         let obj=JSON.parse(json);
         
-        for (let entry of obj.questions){
+        /*for (let entry of obj.questions){
             
             let answers:Answer[]=[];
             for(let item of entry.question.answers){
@@ -17,6 +17,16 @@ export class Questions {
             }
             
             this.Questions.push(new Question(entry.question.question, answers));
+        }*/
+
+        for (let i=0;i<5;++i){
+            
+            let answers:Answer[]=[];
+            for(let item of obj.questions[i].question.answers){
+                answers.push(new Answer(item.answer,item.value))
+            }
+            
+            this.Questions.push(new Question(obj.questions[i].question.question, answers));
         }
     }
 }

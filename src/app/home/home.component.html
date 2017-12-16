@@ -40,14 +40,13 @@
     </div>
     <button class="btn btn-primary" *ngIf="id>0" (click)="backQuestion()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
     <button class="btn btn-primary" *ngIf="id<=0" (click)="backQuestion()" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-    <button class="btn btn-primary" *ngIf="id<39" (click)="nextQuestion()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-    <button class="btn btn-primary" *ngIf="id>=39" (click)="nextQuestion()" disabled><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    <button class="btn btn-primary" *ngIf="id<questionsArray.Questions.length-1" (click)="nextQuestion()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    <button class="btn btn-primary" *ngIf="id>=questionsArray.Questions.length-1" (click)="nextQuestion()" disabled><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
     <button class="btn btn-primary pull-right" *ngIf="check()" (click)="displayResult()">Sprawdź wyniki<i class="fa fa-arrow-down" aria-hidden="true"></i></button>
     <button class="btn btn-primary pull-right" *ngIf="!check()" (click)="displayResult()" disabled>Sprawdź wyniki<i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 </div>
 
-<div class="list-group container" style="padding-left: 0.8em;" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
-{{getConclusion()}}
+<div [innerHTML]="getConclusion()" class="list-group container" style="padding-left: 0.8em;" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
 </div>
 
 <hr>
