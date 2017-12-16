@@ -1,55 +1,507 @@
 import { Injectable } from '@angular/core';
 import { Question } from './home/home.question';
+import { Characteristics } from './home/home.enums';
 
 @Injectable()
 export class SharedService {
-    static json2:string="{\
-        \"temperaments\": [\{\
-            \"temperament\": \{\
-                \"name\": \"sangwinik\",\
-                \"description\": \"tzw. pociągająca osobowość, lubi gawędzić, dusza towarzystwa, poczucie humoru, pamięć do kolorów, emocjonalny, wylewny, entuzjastyczny, wesoły, spontaniczny, ciekawy, urodzony aktor, prostoduszny, żyje ?tu i teraz?, zmienne usposobienie, szczerość serca, wieczne dziecko.\",\
-                \"jobs\": [\
-                ]\
-            \}\
-        \},\{\
-            \"temperament\": \{\
-                \"name\": \"choleryk\",\
-                \"description\": \"Urodzony lider, dynamiczny i aktywny, wykazuje nieodpartą potrzebę zmian, silna wola i zdecydowanie, nie ulega emocjom, trudno go zniechęcić, niezależny i samowystarczalny, wzbudza zaufanie, wszystkim pokieruje\",\
-                \"jobs\": [\
-                ]\
-            \}\
-        \},\{\
-            \"temperament\": \{\
-                \"name\": \"melancholik\",\
-                \"description\": \"głęboki i refleksyjny, analityczny, poważny, dąży do obranego celu, utalentowany, twórczy, ma zdolności muzyczne lub artystyczne, filozofujący, poetyczny, ceni piękno, wrażliwy na potrzeby innych, skłonny do poświęceń, sumienny, idealista.\",\
-                \"jobs\": [\
-                ]\
-            \}\
-        \},\{\
-            \"temperament\": \{\
-                \"name\": \"flegmatyk\",\
-                \"description\": \"Powściągliwy, niewymagający, spokojny, chłodny, opanowany, cierpliwy i zrównoważony, zgodny, cichy, życzliwy i uprzejmy, ukrywa emocje, cieszy się życiem, wszędzie pasuje - uniwersalny.\",\
-                \"jobs\": [\
-                ]\
-            \}\
-        \}]\
-    \}";
+    static shuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
 
-    static json3:string="{\
+        while (0 !== currentIndex) {
+
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
+
+    static stringToEnum(text: string): Characteristics {
+        switch (text) {
+            case "sangwinik":
+                return Characteristics.Sanguine;
+            case "choleryk":
+                return Characteristics.Choleric;
+            case "melancholik":
+                return Characteristics.Melancholic;
+            case "flegmatyk":
+                return Characteristics.Phlegmatic;
+            case "matematyczna":
+                return Characteristics.Matematical;
+            case "lingwistyczna":
+                return Characteristics.Linguistic;
+            case "ruchowa":
+                return Characteristics.Kinesthetic;
+            case "wizualna":
+                return Characteristics.Visual;
+            case "muzyczna":
+                return Characteristics.Musical;
+            case "interpersonalna":
+                return Characteristics.Interpersonal;
+            case "intrapersonalna":
+                return Characteristics.Intrapersonal;
+        }
+    }
+
+    static jsonJob: string = "{\
         \"jobs\": [\{\
+            \"job\": \{\
+                \"name\": \"matematyk\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fizyk\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"chemik\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"naukowiec\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"lekarz\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
             \"job\": \{\
                 \"name\": \"prawnik\",\
                 \"characteristics\": [\
-                    \"śmieciarz\", \"dupek\"\
-                ]\
+                    \"matematyczna\"\
+                ],\
                 \"temperaments\": [\
-                    \"śmieciarz\", \"dupek\"\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"księgowy\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"detektyw\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"pisarz\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"poeta\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"tłumacz\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"scenarzysta\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"polityk\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                   \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"redaktor\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"publicysta\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"pisarz\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"architekt\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"malarz\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"rzeźbiarz\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"strateg\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"chirurg\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"mechanik\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"projektant mody\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"przewodnik\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                   \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fotograf\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fotograf\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"sportowiec\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"tancerz\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"choreograf\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"aktor\",\
+                \"characteristics\": [\
+                    \"ruchowa\" , \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"cyrkowiec\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fryzjer\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"muzyk\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"piosenkarz\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"kompozytor\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"dyrygent\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"nauczyciel\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                   \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"psychoterapeuta\",\
+                \"characteristics\": [\
+                    \"interpersonalna\" , \"intrapersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"pielęgniarka\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"doradca\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"handlowiec\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"menadżer\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"specjalista do spraw public relations\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"filozof\",\
+                \"characteristics\": [\
+                    \"intrapersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"teolog\",\
+                \"characteristics\": [\
+                    \"intrapersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
                 ]\
             \}\
         \}]\
     \}";
 
-    static json:string="{\
+    static jsonQuestions: string = "{\
         \"questions\": [\{\
             \"question\": \{\
                 \"type\": \"temperament\",\
@@ -940,21 +1392,4 @@ export class SharedService {
             \}\
         \}]\
     \}";
-
-
-    static shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-
-        while (0 !== currentIndex) {
-
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-    }
 }

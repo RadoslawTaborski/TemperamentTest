@@ -4,6 +4,7 @@ import { Person } from './home.person';
 import { Characteristics } from './home.enums';
 import { SharedService } from "../shared.service";
 import { Question } from 'app/home/home.question';
+import { Job, Jobs } from 'app/home/home.jobs';
 
 @Component({
   selector: 'app-home',
@@ -21,11 +22,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   counter: number = 0;
   person: Person;
   conclusion: string;
+  jobs: Jobs;
 
   constructor(private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    this.jobs = new Jobs(SharedService.jsonJob);
+    console.log(this.jobs);
     this.isLoaded = true;
   }
 
@@ -61,7 +65,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.addedAllAnswers = false;
     this.id = 0;
     this.person = new Person();
-    this.questionsArray.ReadJson(SharedService.json);
+    this.questionsArray.ReadJson(SharedService.jsonQuestions);
     this.question = this.questionsArray.Questions[0];
     this.showQuestions = true;
   }
@@ -95,7 +99,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let temperament: number[] = [0, 0, 0, 0];
     let intelligence: number[] = [0, 0, 0, 0, 0, 0, 0];
     for (let item of this.questionsArray.Questions) {
-      switch (item.answer.type) {      
+      switch (item.answer.type) {
         case Characteristics.Sanguine:
           ++temperament[0];
           break;
@@ -133,7 +137,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     this.person.setTemperaments(temperament, this.questionsArray.temperamentQuestions);
-    this.person.setIntelligences(intelligence, this.questionsArray.intelligenceQuestions/7*5);
+    this.person.setIntelligences(intelligence, this.questionsArray.intelligenceQuestions / 7 * 5);
   }
 
   getConclusion() {
@@ -164,9 +168,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     text += "Twoje dobrze rozwinięte inteligencje to:\r\n"
-    for(let item of tmp2){
-      if(item.value>60){
-        text+="\t- inteligencja "+item.name+"\r\n";
+    for (let item of tmp2) {
+      if (item.value > 60) {
+        text += "\t- inteligencja " + item.name + "\r\n";
       }
     }
 

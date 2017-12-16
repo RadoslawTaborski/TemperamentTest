@@ -26,14 +26,14 @@ export class HeaderComponent implements OnInit {
   }
 
   navStyle(url) {
-    if (url == '/home' || url =='/')
+    if (url == '/home' || url == '/')
       this.homeControler = true;
     else
       this.homeControler = false;
   }
 
   ngOnInit() {
-    
+
   }
 
   shoulHideNavbar() {

@@ -6,8 +6,8 @@ import { forEach } from "@angular/router/src/utils/collection";
 
 export class Questions {
     Questions: Question[];
-    temperamentQuestions:number=0;
-    intelligenceQuestions:number=0;
+    temperamentQuestions: number = 0;
+    intelligenceQuestions: number = 0;
 
     ReadJson(json: string) {
         this.Questions = [];
@@ -31,11 +31,11 @@ export class Questions {
                     answers.push(new Answer(item.answer, item.value))
                 }
                 this.temperamentQuestions++;
-                answers=SharedService.shuffle(answers);
+                answers = SharedService.shuffle(answers);
                 this.Questions.push(new Question(obj.questions[i].question.question, answers, QuestionType.Temperaments));
-            }else{               
-                for (let j=0; j<6;++j) {
-                    answers.push(new Answer(j+"", obj.questions[i].question.value,j));
+            } else {
+                for (let j = 0; j < 6; ++j) {
+                    answers.push(new Answer(j + "", obj.questions[i].question.value, j));
                 }
                 this.intelligenceQuestions++;
                 this.Questions.push(new Question(obj.questions[i].question.question, answers, QuestionType.Inteligences));
