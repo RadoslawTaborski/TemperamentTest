@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Questions } from './home.questions';
-import { Person } from './home.person';
+import { Person, Characteristic } from './home.person';
 import { Characteristics } from './home.enums';
 import { SharedService } from "../shared.service";
 import { Question } from 'app/home/home.question';
@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.jobs = new Jobs(SharedService.jsonJob);
-    console.log(this.jobs);
     this.isLoaded = true;
   }
 
@@ -144,7 +143,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.setCharacteristics();
     let tmp = this.person.sortTemperaments();
     let tmp2 = this.person.sortIntelligences();
-
+    let temperaments: Characteristics[] = [];
+    let intelligences: Characteristics[] = [];
     console.log(this.person);
 
     let text = "Jesteś:\r\n\t" +
@@ -155,15 +155,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     if ((tmp[0].value - tmp[1].value) > 30) {
       text += "Twoim dominującym temperamentem jest " + tmp[0].name + ".\r\n";
+      temperaments.push(tmp[0].characteristic);
     } else {
       if ((tmp[1].value - tmp[2].value) <= 20) {
         if ((tmp[2].value - tmp[3].value) <= 10) {
           text += "Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.\r\n";
+          temperaments.push(tmp[0].characteristic);
+          temperaments.push(tmp[1].characteristic);
+          temperaments.push(tmp[2].characteristic);
+          temperaments.push(tmp[3].characteristic);
         } else {
           text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a, " + tmp[1].name + "a i " + tmp[2].name + "a.\r\n";
+          temperaments.push(tmp[0].characteristic);
+          temperaments.push(tmp[1].characteristic);
+          temperaments.push(tmp[2].characteristic);
         }
       } else {
         text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a i " + tmp[1].name + "a.\r\n";
+        temperaments.push(tmp[0].characteristic);
+        temperaments.push(tmp[1].characteristic);
       }
     }
 
@@ -171,19 +181,43 @@ export class HomeComponent implements OnInit, AfterViewInit {
     for (let item of tmp2) {
       if (item.value > 60) {
         text += "\t- inteligencja " + item.name + "\r\n";
+        intelligences.push(item.characteristic);
+      }
+    }
+    if(intelligences.length==0){
+      text += "\t- inteligencja " + tmp2[0].name + "\r\n";
+      intelligences.push(tmp2[0].characteristic)
+    }
+
+    let jobs: Job[] = [];
+    for (let item of this.jobs.jobs) {
+      for (let elem of item.intelligences) {
+        if (intelligences.indexOf(elem) != -1) {
+          for (let elem2 of item.temperaments) {
+            if (temperaments.indexOf(elem2) != -1) {
+              jobs.push(item);
+            }
+          }
+        }
       }
     }
 
-    text = this.stringToHtmlString(text);
-    return text;
+    text += "Zawody, w ktróych możesz się sprawdzić to:\r\n"
+    for(let item of jobs){
+      text+="\t- "+ item.name +"\r\n";
+    }
+    console.log(jobs);
+
+      text = this.stringToHtmlString(text);
+      return text;
+    }
+
+    stringToHtmlString(text: string) {
+      let result = "<br>" + text + "</br>";
+      result = result.replace(/\r\n/g, "</br><br>");
+      result = result.replace(/\t/g, "&emsp;");
+
+      return result;
+    }
+
   }
-
-  stringToHtmlString(text: string) {
-    let result = "<br>" + text + "</br>";
-    result = result.replace(/\r\n/g, "</br><br>");
-    result = result.replace(/\t/g, "&emsp;");
-
-    return result;
-  }
-
-}

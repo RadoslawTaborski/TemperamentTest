@@ -13,32 +13,22 @@ export class Questions {
         this.Questions = [];
         let obj = JSON.parse(json);
 
-        /*for (let entry of obj.questions){
-            
-            let answers:Answer[]=[];
-            for(let item of entry.question.answers){
-                answers.push(new Answer(item.answer,item.value))
-            }
-            
-            this.Questions.push(new Question(entry.question.question, answers));
-        }*/
-
-        for (let i = 37; i < 68; ++i) {
+        for (let entry of obj.questions){
 
             let answers: Answer[] = [];
-            if (obj.questions[i].question.type == "temperament") {
-                for (let item of obj.questions[i].question.answers) {
+            if (entry.question.type == "temperament") {
+                for (let item of entry.question.answers) {
                     answers.push(new Answer(item.answer, item.value))
                 }
                 this.temperamentQuestions++;
                 answers = SharedService.shuffle(answers);
-                this.Questions.push(new Question(obj.questions[i].question.question, answers, QuestionType.Temperaments));
+                this.Questions.push(new Question(entry.question.question, answers, QuestionType.Temperaments));
             } else {
                 for (let j = 0; j < 6; ++j) {
-                    answers.push(new Answer(j + "", obj.questions[i].question.value, j));
+                    answers.push(new Answer(j + "", entry.question.value, j));
                 }
                 this.intelligenceQuestions++;
-                this.Questions.push(new Question(obj.questions[i].question.question, answers, QuestionType.Inteligences));
+                this.Questions.push(new Question(entry.question.question, answers, QuestionType.Inteligences));
             }
         }
     }
