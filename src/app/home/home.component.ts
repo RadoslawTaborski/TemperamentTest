@@ -184,40 +184,46 @@ export class HomeComponent implements OnInit, AfterViewInit {
         intelligences.push(item.characteristic);
       }
     }
-    if(intelligences.length==0){
+    if (intelligences.length == 0) {
       text += "\t- inteligencja " + tmp2[0].name + "\r\n";
       intelligences.push(tmp2[0].characteristic)
     }
 
     let jobs: Job[] = [];
+    let flag: boolean = true;
     for (let item of this.jobs.jobs) {
       for (let elem of item.intelligences) {
-        if (intelligences.indexOf(elem) != -1) {
-          for (let elem2 of item.temperaments) {
-            if (temperaments.indexOf(elem2) != -1) {
-              jobs.push(item);
-            }
+        if (intelligences.indexOf(elem) == -1) {
+          flag = false;
+          break;
+        }
+      }
+      if (flag == true){
+        for (let elem of item.temperaments) {
+          if (temperaments.indexOf(elem) != -1) {
+            jobs.push(item);
+            break;
           }
         }
       }
     }
 
     text += "Zawody, w ktróych możesz się sprawdzić to:\r\n"
-    for(let item of jobs){
-      text+="\t- "+ item.name +"\r\n";
+    for (let item of jobs) {
+      text += "\t- " + item.name + "\r\n";
     }
     console.log(jobs);
 
-      text = this.stringToHtmlString(text);
-      return text;
-    }
-
-    stringToHtmlString(text: string) {
-      let result = "<br>" + text + "</br>";
-      result = result.replace(/\r\n/g, "</br><br>");
-      result = result.replace(/\t/g, "&emsp;");
-
-      return result;
-    }
-
+    text = this.stringToHtmlString(text);
+    return text;
   }
+
+  stringToHtmlString(text: string) {
+    let result = "<br>" + text + "</br>";
+    result = result.replace(/\r\n/g, "</br><br>");
+    result = result.replace(/\t/g, "&emsp;");
+
+    return result;
+  }
+
+}
