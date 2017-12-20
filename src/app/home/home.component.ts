@@ -21,8 +21,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   question: Question;
   counter: number = 0;
   person: Person;
-  conclusion: string;
+  conclusion1: string;
+  conclusion2: string;
+  conclusion3: string;
   jobs: Jobs;
+  intelligences: Characteristics[];
+  temperaments: Characteristics[];
 
   constructor(private cd: ChangeDetectorRef) {
   }
@@ -59,13 +63,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   start() {
-    this.conclusion = "";
+    this.conclusion1 = "";
+    this.conclusion2 = "";
+    this.conclusion3 = "";
     this.info = "";
     this.addedAllAnswers = false;
     this.id = 0;
     this.person = new Person();
     this.questionsArray.ReadJson(SharedService.jsonQuestions);
     this.question = this.questionsArray.Questions[0];
+    this.intelligences=[];
+    this.temperaments=[];
     this.showQuestions = true;
   }
 
@@ -91,7 +99,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.addedAllAnswers = true;
     this.showQuestions = false;
     this.info = "";
-    this.conclusion = this.getConclusion();
+    this.conclusion1 = this.getConclusion1();
+    this.conclusion2 = this.getConclusion2();
+    this.conclusion3 = this.getConclusion3();
   }
 
   setCharacteristics() {
@@ -139,68 +149,79 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.person.setIntelligences(intelligence, this.questionsArray.intelligenceQuestions / 7 * 5);
   }
 
-  getConclusion() {
+  getConclusion1() {
     this.setCharacteristics();
     let tmp = this.person.sortTemperaments();
-    let tmp2 = this.person.sortIntelligences();
-    let temperaments: Characteristics[] = [];
-    let intelligences: Characteristics[] = [];
     console.log(this.person);
 
-    let text = "Jesteś:\r\n\t" +
-      tmp[0].value + "% " + tmp[0].name + "iem\r\n\t" +
+    let text ="\t"+ tmp[0].value + "% " + tmp[0].name + "iem\r\n\t" +
       tmp[1].value + "% " + tmp[1].name + "iem\r\n\t" +
       tmp[2].value + "% " + tmp[2].name + "iem\r\n\t" +
       tmp[3].value + "% " + tmp[3].name + "iem\r\n";
 
     if ((tmp[0].value - tmp[1].value) > 30) {
       text += "Twoim dominującym temperamentem jest " + tmp[0].name + ".\r\n";
-      temperaments.push(tmp[0].characteristic);
+      this.temperaments.push(tmp[0].characteristic);
     } else {
       if ((tmp[1].value - tmp[2].value) <= 20) {
         if ((tmp[2].value - tmp[3].value) <= 10) {
           text += "Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.\r\n";
-          temperaments.push(tmp[0].characteristic);
-          temperaments.push(tmp[1].characteristic);
-          temperaments.push(tmp[2].characteristic);
-          temperaments.push(tmp[3].characteristic);
+          this.temperaments.push(tmp[0].characteristic);
+          this.temperaments.push(tmp[1].characteristic);
+          this.temperaments.push(tmp[2].characteristic);
+          this.temperaments.push(tmp[3].characteristic);
         } else {
           text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a, " + tmp[1].name + "a i " + tmp[2].name + "a.\r\n";
-          temperaments.push(tmp[0].characteristic);
-          temperaments.push(tmp[1].characteristic);
-          temperaments.push(tmp[2].characteristic);
+          this.temperaments.push(tmp[0].characteristic);
+          this.temperaments.push(tmp[1].characteristic);
+          this.temperaments.push(tmp[2].characteristic);
         }
       } else {
         text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a i " + tmp[1].name + "a.\r\n";
-        temperaments.push(tmp[0].characteristic);
-        temperaments.push(tmp[1].characteristic);
+        this.temperaments.push(tmp[0].characteristic);
+        this.temperaments.push(tmp[1].characteristic);
       }
     }
 
-    text += "Twoje dobrze rozwinięte inteligencje to:\r\n"
+    
+    
+    text = this.stringToHtmlString(text);
+    return text;
+  }
+
+  getConclusion2(){
+    let text="";
+    let tmp2 = this.person.sortIntelligences();
+
     for (let item of tmp2) {
       if (item.value > 60) {
         text += "\t- inteligencja " + item.name + "\r\n";
-        intelligences.push(item.characteristic);
+        this.intelligences.push(item.characteristic);
       }
     }
-    if (intelligences.length == 0) {
+    if (this.intelligences.length == 0) {
       text += "\t- inteligencja " + tmp2[0].name + "\r\n";
-      intelligences.push(tmp2[0].characteristic)
+      this.intelligences.push(tmp2[0].characteristic)
     }
 
+    text = this.stringToHtmlString(text);
+    return text;
+  }
+
+  getConclusion3(){
+    let text="";
     let jobs: Job[] = [];
     let flag: boolean = true;
     for (let item of this.jobs.jobs) {
       for (let elem of item.intelligences) {
-        if (intelligences.indexOf(elem) == -1) {
+        if (this.intelligences.indexOf(elem) == -1) {
           flag = false;
           break;
         }
       }
       if (flag == true){
         for (let elem of item.temperaments) {
-          if (temperaments.indexOf(elem) != -1) {
+          if (this.temperaments.indexOf(elem) != -1) {
             jobs.push(item);
             break;
           }
@@ -208,7 +229,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
 
-    text += "Zawody, w ktróych możesz się sprawdzić to:\r\n"
     for (let item of jobs) {
       text += "\t- " + item.name + "\r\n";
     }

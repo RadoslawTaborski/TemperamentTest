@@ -46,7 +46,29 @@
     <button class="btn btn-primary pull-right" *ngIf="!check()" (click)="displayResult()" disabled>Sprawdź wyniki<i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 </div>
 
-<div [innerHTML]="conclusion" class="list-group container" style="padding-left: 0.8em;" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
+<div class="container">
+<div class="panel panel-primary" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
+    <div class="panel-heading">
+      <h3 class="panel-title">Jesteś: </h3>
+    </div>
+    <div [innerHTML]="conclusion1" class="panel-body">
+    </div>
+</div>
+
+<div class="panel panel-primary" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
+    <div class="panel-heading">
+      <h3 class="panel-title">Twoje dobrze rozwinięte inteligencje to: </h3>
+    </div>
+    <div [innerHTML]="conclusion2" class="panel-body">
+    </div>
+</div>
+
+<div class="panel panel-primary" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
+    <div class="panel-heading">
+      <h3 class="panel-title">Zawody, w ktróych możesz się sprawdzić to: </h3>
+    </div>
+    <div [innerHTML]="conclusion3" class="panel-body">
+    </div>
 </div>
 
 <hr>
