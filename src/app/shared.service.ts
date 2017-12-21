@@ -1,7 +1,1395 @@
 import { Injectable } from '@angular/core';
 import { Question } from './home/home.question';
+import { Characteristics } from './home/home.enums';
 
 @Injectable()
 export class SharedService {
+    static shuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
 
+        while (0 !== currentIndex) {
+
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
+
+    static stringToEnum(text: string): Characteristics {
+        switch (text) {
+            case "sangwinik":
+                return Characteristics.Sanguine;
+            case "choleryk":
+                return Characteristics.Choleric;
+            case "melancholik":
+                return Characteristics.Melancholic;
+            case "flegmatyk":
+                return Characteristics.Phlegmatic;
+            case "matematyczna":
+                return Characteristics.Matematical;
+            case "lingwistyczna":
+                return Characteristics.Linguistic;
+            case "ruchowa":
+                return Characteristics.Kinesthetic;
+            case "wizualna":
+                return Characteristics.Visual;
+            case "muzyczna":
+                return Characteristics.Musical;
+            case "interpersonalna":
+                return Characteristics.Interpersonal;
+            case "intrapersonalna":
+                return Characteristics.Intrapersonal;
+        }
+    }
+
+    static jsonJob: string = "{\
+        \"jobs\": [\{\
+            \"job\": \{\
+                \"name\": \"matematyk\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fizyk\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"chemik\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"naukowiec\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"lekarz\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"prawnik\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"księgowy\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"detektyw\",\
+                \"characteristics\": [\
+                    \"matematyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"pisarz\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"poeta\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"tłumacz\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"scenarzysta\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"polityk\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                   \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"redaktor\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"publicysta\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"pisarz\",\
+                \"characteristics\": [\
+                    \"lingwistyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"architekt\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"malarz\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"rzeźbiarz\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"strateg\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"chirurg\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"mechanik\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"projektant mody\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"przewodnik\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                   \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fotograf\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fotograf\",\
+                \"characteristics\": [\
+                    \"wizualna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"sportowiec\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"tancerz\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"choreograf\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"aktor\",\
+                \"characteristics\": [\
+                    \"ruchowa\" , \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"cyrkowiec\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"fryzjer\",\
+                \"characteristics\": [\
+                    \"ruchowa\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"muzyk\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"piosenkarz\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"kompozytor\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"dyrygent\",\
+                \"characteristics\": [\
+                    \"muzyczna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"nauczyciel\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                   \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"psychoterapeuta\",\
+                \"characteristics\": [\
+                    \"interpersonalna\" , \"intrapersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"pielęgniarz\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"doradca\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"handlowiec\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"menadżer\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"specjalista do spraw public relations\",\
+                \"characteristics\": [\
+                    \"interpersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"filozof\",\
+                \"characteristics\": [\
+                    \"intrapersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\"\
+                ]\
+            \}\
+        \},{\
+            \"job\": \{\
+                \"name\": \"teolog\",\
+                \"characteristics\": [\
+                    \"intrapersonalna\"\
+                ],\
+                \"temperaments\": [\
+                    \"flegmatyk\", \"melancholik\", \"choleryk\", \"sangwinik\"\
+                ]\
+            \}\
+        \}]\
+    \}";
+
+    static jsonQuestions: string = "{\
+        \"questions\": [\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"żywy\",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"przedsiębiorczy\",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"analityczny\",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"elastyczny\",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"wesoły\",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"przekonywujący\",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"wytrwały\",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"spokojny\",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"towarzyski\",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"o silnej woli\",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"poświęcający się\",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"ugodowy\",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"urzekający\",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"rywalizujący\",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"delikatny\",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"opanowany\",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \} ,\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"pokrzepiający \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"zaradny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"pełen szacunku \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"powściągliwy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"pełen werwy \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"samodzielny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"wrażliwy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"niewymagający \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"promotor \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"nastawiony na sukces \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"planujący \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"cierpliwy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"spontaniczny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"pewny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"zorganizowany \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"nieśmiały \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"optymista \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"szczery \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"uporządkowany \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"uprzejmy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"dowcipny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"autorytatywny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"wierny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"życzliwy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"czarujący \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"odważny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"drobiazgowy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"dyplomatyczny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"pogodny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"pewny siebie \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"kulturalny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"stały \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"inspirator \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"niezależny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"idealista \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"nieszkodliwy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"wylewny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"stanowczy \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"głęboki \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"cięty \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"towarzyski \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"działacz \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"meloman \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"rozjemca \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"rozmowny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"nieustępliwy \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"grzeczny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"tolerancyjny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"energiczny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"przywódca \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"lojalny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"słuchacz \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"ujmujący \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"szef \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"organizator \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"zadowolony \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"popularny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"pracowity \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"perfekcjonista \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"sympatyczny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"żywiołowy \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"śmiały \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"taktowny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"zrónoważony \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"buńczuczny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"apodyktyczny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"wstydliwy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"chłodny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"niezdyscyplinowany \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"beznamiętny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"pamiętliwy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"apatyczny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"powtarzającysię \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"oporny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"obraźliwy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"niezaangażowany \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"zapominalski \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"zuchwały \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"kapryśny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"lękliwy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"wtrącający  się \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"niecierpliwy \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"niepewny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"niezdecydowany \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"niestały \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"skryty \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"niepopularny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"odludek \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"chaotyczny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"twardogłowy \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"wybredny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"ociągający się \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"na wszystko pozwala \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"megaloman \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"pesymista \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"bezbarwny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"złośnik \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"dyskutant \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"wyobcowany \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"nie mający celu \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"naiwny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"denerwujący \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"nastawiony negatywnie \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"nonszalancki \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"lizus \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"pracoholik \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"izolujący się \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"zatroskany \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"gadatliwy \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"nietaktowny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"przewrażliwiony \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"bojaźliwy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"niezorganizowany \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"dominujący \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"przygnębiony \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"sceptyk \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"niestały \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"nietolerancyjny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"zamknięty w sobie \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"obojętny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"bałaganiarz \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"manipulant \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"nastrojowy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"mamrot \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"próżny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"uparty \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"nieufny \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"powolny \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"donośny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"pyszałek \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"samotnik \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"leniwy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"roztargniony \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"zapalczywy \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"podejrzliwy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"niemrawy \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"niespokojny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"pochopny \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"mściwy \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"dystansujący się \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"temperament\",\
+                \"question\": \"Które określenie najbardziej do Ciebie pasuje?\",\
+                \"answers\": [\{\
+                    \"answer\": \"zmienny \",\
+                    \"value\": \"sangwinik\"\
+                \}, \{\
+                    \"answer\": \"przebiegły \",\
+                    \"value\": \"choleryk\"\
+                \}, \{\
+                    \"answer\": \"krytykant \",\
+                    \"value\": \"melancholik\"\
+                \}, \{\
+                    \"answer\": \"ugodowiec \",\
+                    \"value\": \"flegmatyk\"\
+                \}]\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz uzdolnienia manualne\",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz dobre wyczucie kierunku\",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz umiejętność rozwiązywania sporów między przyjaciółmi \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Łatwo zapamiętujesz słowa piosenek \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz wyjaśniać w prosty sposób trudne zagadnienia \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Robisz wszystko krok po kroku \",\
+                \"value\": \"matematyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Dobrze znasz samego siebie i rozumiesz swoje postępowanie \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz ćwiczenia grupowe i spotkania towarzyskie \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Dobrze uczysz się słuchając wykładów i wywodów innych ludzi \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Słuchając muzyki doznajesz zmian nastroju \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz krzyżówki, łamigłówki i problemy logiczne \",\
+                \"value\": \"matematyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Tablice, zestawienia i pomoce wizualne pomagają Ci w uczeniu się \",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Jesteś wrażliwy na nastroje i uczucia otaczających Ciebie ludzi \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Najlepiej uczysz się, kiedy wiesz że jesteś odpowiedzialny za wynik swojej pracy \",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Zanim zechcesz się czegoś nauczyć musisz zobaczyć, że będziesz miał z tego jakąś korzyść \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Podczas nauki i rozmyślań lubisz spokój i samotność \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz usłyszeć poszczególne instrumenty w złożonych utworach muzycznych \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Łatwo przychodzi Ci wywołanie w wyobraźni zapamiętanych i wymyślonych obrazów \",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz bogaty zasób słownictwa i potrafisz się nim posługiwać \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz robić notatki \",\
+                \"value\": \"lingwistyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Posiadasz dobre poczucie równowagi i lubisz ruch fizyczny \",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz dostrzegać strukturę przedmiotów i związki między różnymi rzeczami \",\
+                \"value\": \"matematyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz pracować w zespole i korzystać z cudzych doświadczeń \",\
+                \"value\": \"interpersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Jesteś dobrym obserwatorem i często zauważasz rzeczy uchodzące uwadze innych \",\
+                \"value\": \"wizualna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Często bywasz niespokojny \",\
+                \"value\": \"ruchowa\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz pracować lub uczyć się niezależnie od innych \",\
+                \"value\": \"intrapersonalna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Lubisz komponować muzykę \",\
+                \"value\": \"muzyczna\"\
+            \}\
+        \},\{\
+            \"question\": \{\
+                \"type\": \"inteligencja\",\
+                \"question\": \"Potrafisz radzić sobie z licznymi problemami matematycznymi \",\
+                \"value\": \"matematyczna\"\
+            \}\
+        \}]\
+    \}";
 }

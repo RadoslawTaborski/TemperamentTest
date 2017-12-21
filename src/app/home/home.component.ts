@@ -1,7 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Question } from './home.question';
-import { Answer } from './home.question';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Questions } from './home.questions';
+import { Person, Characteristic } from './home.person';
+import { Characteristics } from './home.enums';
 import { SharedService } from "../shared.service";
+import { Question } from 'app/home/home.question';
+import { Job, Jobs } from 'app/home/home.jobs';
 
 @Component({
   selector: 'app-home',
@@ -11,56 +14,236 @@ import { SharedService } from "../shared.service";
 export class HomeComponent implements OnInit, AfterViewInit {
   isLoaded = false;
   showQuestions = false;
-  questionsArray: Question[]=[];
-  addedAllAnswers: Boolean=false;
-  info: String="";
+  questionsArray: Questions = new Questions();
+  addedAllAnswers: Boolean = false;
+  info: String = "";
+  id: number;
+  question: Question;
+  counter: number = 0;
+  person: Person;
+  conclusion1: string;
+  conclusion2: string;
+  conclusion3: string;
+  jobs: Jobs;
+  intelligences: Characteristics[];
+  temperaments: Characteristics[];
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
-      this.isLoaded = true;
-      this.questionsArray.push(new Question("Jesteś najlepszy?", [
-        new Answer("Tak", true),
-        new Answer("Nie", false)
-      ]));
-  }
-
-  questions() {
-    return this.questionsArray;
-  }
-
-  start(){
-    this.showQuestions=true;
+    this.jobs = new Jobs(SharedService.jsonJob);
+    this.isLoaded = true;
   }
 
   ngAfterViewInit() {
-
+    this.cd.detectChanges();
   }
 
-  check(){
-    console.log(this.questionsArray);
-    let tmp =true;
-    this.questionsArray.forEach(element => {
-      if(element.checked==false){
-        tmp=false;
-      }
-    })
-    if(tmp==true)
-    {
-      this.addedAllAnswers=true;
-      this.showQuestions=false;
-      this.info="";
-    }else{
-      this.addedAllAnswers=false;
-      this.info="Oddaj odpowiedzi na wszystkie pytania";
+  ngAfterContentChecked() {
+    this.cd.detectChanges();
+  }
+
+  nextQuestion() {
+    if (this.id < this.questionsArray.Questions.length - 1) {
+      this.id++
+      this.question = this.questionsArray.Questions[this.id];
     }
   }
 
-  getConclusion(){
-    if(this.questionsArray[0].answer.value==true)
-      return "Jesteś najlepszy i znajdziesz pracę wszędzie";
-    else
-      return "Jesteś do niczego i rzuć się z mostu";
+  actualQuestion() {
+    return this.question;
+  }
+
+  backQuestion() {
+    if (this.id > 0) {
+      this.id--
+      this.question = this.questionsArray.Questions[this.id];
+    }
+  }
+
+  start() {
+    this.conclusion1 = "";
+    this.conclusion2 = "";
+    this.conclusion3 = "";
+    this.info = "";
+    this.addedAllAnswers = false;
+    this.id = 0;
+    this.person = new Person();
+    this.questionsArray.ReadJson(SharedService.jsonQuestions);
+    this.question = this.questionsArray.Questions[0];
+    this.intelligences=[];
+    this.temperaments=[];
+    this.showQuestions = true;
+  }
+
+  check() {
+    let tmp = true;
+    this.counter = this.questionsArray.Questions.length;
+    this.questionsArray.Questions.forEach(element => {
+      if (element.checked == false) {
+        tmp = false;
+        this.counter--;
+      }
+    })
+    this.info = "Oddano odpowiedź na " + this.counter + " z " + this.questionsArray.Questions.length;
+    if (tmp == true) {
+      return true;
+    } else {
+      this.addedAllAnswers = false;
+      return false;
+    }
+  }
+
+  displayResult() {
+    this.addedAllAnswers = true;
+    this.showQuestions = false;
+    this.info = "";
+    this.conclusion1 = this.getConclusion1();
+    this.conclusion2 = this.getConclusion2();
+    this.conclusion3 = this.getConclusion3();
+  }
+
+  setCharacteristics() {
+    let temperament: number[] = [0, 0, 0, 0];
+    let intelligence: number[] = [0, 0, 0, 0, 0, 0, 0];
+    for (let item of this.questionsArray.Questions) {
+      switch (item.answer.type) {
+        case Characteristics.Sanguine:
+          ++temperament[0];
+          break;
+        case Characteristics.Choleric:
+          ++temperament[1];
+          break;
+        case Characteristics.Melancholic:
+          ++temperament[2];
+          break;
+        case Characteristics.Phlegmatic:
+          ++temperament[3];
+          break;
+        case Characteristics.Matematical:
+          intelligence[0] += item.answer.value;
+          break;
+        case Characteristics.Linguistic:
+          intelligence[1] += item.answer.value;
+          break;
+        case Characteristics.Visual:
+          intelligence[2] += item.answer.value;
+          break;
+        case Characteristics.Kinesthetic:
+          intelligence[3] += item.answer.value;
+          break;
+        case Characteristics.Musical:
+          intelligence[4] += item.answer.value;
+          break;
+        case Characteristics.Interpersonal:
+          intelligence[5] += item.answer.value;
+          break;
+        case Characteristics.Intrapersonal:
+          intelligence[6] += item.answer.value;
+          break;
+      }
+    }
+
+    this.person.setTemperaments(temperament, this.questionsArray.temperamentQuestions);
+    this.person.setIntelligences(intelligence, this.questionsArray.intelligenceQuestions / 7 * 5);
+  }
+
+  getConclusion1() {
+    this.setCharacteristics();
+    let tmp = this.person.sortTemperaments();
+    console.log(this.person);
+
+    let text ="\t"+ tmp[0].value + "% " + tmp[0].name + "iem\r\n\t" +
+      tmp[1].value + "% " + tmp[1].name + "iem\r\n\t" +
+      tmp[2].value + "% " + tmp[2].name + "iem\r\n\t" +
+      tmp[3].value + "% " + tmp[3].name + "iem\r\n";
+
+    if ((tmp[0].value - tmp[1].value) > 20) {
+      text += "Twoim dominującym temperamentem jest " + tmp[0].name + ".\r\n";
+      this.temperaments.push(tmp[0].characteristic);
+    } else {
+      if ((tmp[1].value - tmp[2].value) <= 10) {
+        if ((tmp[2].value - tmp[3].value) <= 5) {
+          text += "Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.\r\n";
+          this.temperaments.push(tmp[0].characteristic);
+          this.temperaments.push(tmp[1].characteristic);
+          this.temperaments.push(tmp[2].characteristic);
+          this.temperaments.push(tmp[3].characteristic);
+        } else {
+          text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a, " + tmp[1].name + "a i " + tmp[2].name + "a.\r\n";
+          this.temperaments.push(tmp[0].characteristic);
+          this.temperaments.push(tmp[1].characteristic);
+          this.temperaments.push(tmp[2].characteristic);
+        }
+      } else {
+        text += "Nie masz dominującego temperamentu, łączysz cechy " + tmp[0].name + "a i " + tmp[1].name + "a.\r\n";
+        this.temperaments.push(tmp[0].characteristic);
+        this.temperaments.push(tmp[1].characteristic);
+      }
+    }
+
+    
+    
+    text = this.stringToHtmlString(text);
+    return text;
+  }
+
+  getConclusion2(){
+    let text="";
+    let tmp2 = this.person.sortIntelligences();
+
+    for (let item of tmp2) {
+      if (item.value > 60) {
+        text += "\t- inteligencja " + item.name + "\r\n";
+        this.intelligences.push(item.characteristic);
+      }
+    }
+    if (this.intelligences.length == 0) {
+      text += "\t- inteligencja " + tmp2[0].name + "\r\n";
+      this.intelligences.push(tmp2[0].characteristic)
+    }
+
+    text = this.stringToHtmlString(text);
+    return text;
+  }
+
+  getConclusion3(){
+    let text="";
+    let jobs: Job[] = [];
+    let flag: boolean = true;
+    for (let item of this.jobs.jobs) {
+      flag=true;
+      for (let elem of item.intelligences) {
+        if (this.intelligences.indexOf(elem) == -1) {
+          flag = false;
+          break;
+        }
+      }
+      if (flag == true){
+        for (let elem of item.temperaments) {
+          if (this.temperaments.indexOf(elem) != -1) {
+            jobs.push(item);
+            break;
+          }
+        }
+      }
+    }
+
+    for (let item of jobs) {
+      text += "\t- " + item.name + "\r\n";
+    }
+
+    text = this.stringToHtmlString(text);
+    return text;
+  }
+
+  stringToHtmlString(text: string) {
+    let result = "<br>" + text + "</br>";
+    result = result.replace(/\r\n/g, "</br><br>");
+    result = result.replace(/\t/g, "&emsp;");
+
+    return result;
   }
 
 }

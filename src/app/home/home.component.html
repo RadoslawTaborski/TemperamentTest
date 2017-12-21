@@ -21,28 +21,54 @@
 </div>
 <p></p>
 <hr>
+<p style="color:rgb(42, 42, 133); text-align:center">{{info}}</p>
 <div class="list-group container" style="padding-left: 0.8em;" *ngIf="isLoaded ==true && showQuestions==true">
-    <div class="panel panel-default" *ngFor="let question of questions();">
+    <div class="panel panel-default" *ngIf="actualQuestion()!=null">
         <div class="panel-heading">
-            <h4 class="panel-title">{{question.question}}</h4>
+            <h4 class="panel-title">{{actualQuestion().question}}</h4>
         </div>
         <div class="panel-body">
-            <div id="{{question.index}}" *ngFor="let answer of question.answers;">
+            <div *ngFor="let answer of actualQuestion().answers;">
                 <div class="checkbox">
                     <label>
-                <input type="checkbox" [checked]="answer.checked" (change)="question.check(answer)">
+                <input type="checkbox" [checked]="answer.checked" (change)="actualQuestion().check(answer); nextQuestion()">
                 <h3 class="answer">{{answer.answer}}</h3>
             </label>
                 </div>
             </div>
         </div>
     </div>
-    <button class="btn btn-primary" (click)="check()">Sprawdź wyniki<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    <button class="btn btn-primary" *ngIf="id>0" (click)="backQuestion()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <button class="btn btn-primary" *ngIf="id<=0" (click)="backQuestion()" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <button class="btn btn-primary" *ngIf="id<questionsArray.Questions.length-1" (click)="nextQuestion()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    <button class="btn btn-primary" *ngIf="id>=questionsArray.Questions.length-1" (click)="nextQuestion()" disabled><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    <button class="btn btn-primary pull-right" *ngIf="check()" (click)="displayResult()">Sprawdź wyniki<i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+    <button class="btn btn-primary pull-right" *ngIf="!check()" (click)="displayResult()" disabled>Sprawdź wyniki<i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 </div>
-<p style="color:red; text-align:center">{{info}}</p>
 
-<div class="list-group container" style="padding-left: 0.8em;" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
-{{getConclusion()}}
+<div class="container">
+<div class="panel panel-primary" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true">
+    <div class="panel-heading">
+      <h3 class="panel-title">Jesteś: </h3>
+    </div>
+    <div [innerHTML]="conclusion1" class="panel-body">
+    </div>
+</div>
+
+<div class="panel panel-primary" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true && conclusion2!=''">
+    <div class="panel-heading">
+      <h3 class="panel-title">Twoje dobrze rozwinięte inteligencje to: </h3>
+    </div>
+    <div [innerHTML]="conclusion2" class="panel-body">
+    </div>
+</div>
+
+<div class="panel panel-primary" *ngIf="isLoaded==true && showQuestions==false && addedAllAnswers==true && conclusion3!=''">
+    <div class="panel-heading">
+      <h3 class="panel-title">Zawody, w ktróych możesz się sprawdzić to: </h3>
+    </div>
+    <div [innerHTML]="conclusion3" class="panel-body">
+    </div>
 </div>
 
 <hr>
