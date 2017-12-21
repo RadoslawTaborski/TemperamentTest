@@ -28,7 +28,7 @@ export class Questions {
                     answers.push(new Answer(j + "", entry.question.value, j));
                 }
                 this.intelligenceQuestions++;
-                this.Questions.push(new Question(entry.question.question, answers, QuestionType.Inteligences));
+                this.Questions.push(new Question(entry.question.question+ " (0-wcale; 5-doskonale)", answers, QuestionType.Inteligences));
             }
         }
     }

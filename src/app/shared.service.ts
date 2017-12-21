@@ -430,7 +430,7 @@ export class SharedService {
             \}\
         \},{\
             \"job\": \{\
-                \"name\": \"pielęgniarka\",\
+                \"name\": \"pielęgniarz\",\
                 \"characteristics\": [\
                     \"interpersonalna\"\
                 ],\

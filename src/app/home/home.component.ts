@@ -159,12 +159,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
       tmp[2].value + "% " + tmp[2].name + "iem\r\n\t" +
       tmp[3].value + "% " + tmp[3].name + "iem\r\n";
 
-    if ((tmp[0].value - tmp[1].value) > 30) {
+    if ((tmp[0].value - tmp[1].value) > 20) {
       text += "Twoim dominującym temperamentem jest " + tmp[0].name + ".\r\n";
       this.temperaments.push(tmp[0].characteristic);
     } else {
-      if ((tmp[1].value - tmp[2].value) <= 20) {
-        if ((tmp[2].value - tmp[3].value) <= 10) {
+      if ((tmp[1].value - tmp[2].value) <= 10) {
+        if ((tmp[2].value - tmp[3].value) <= 5) {
           text += "Nie masz dominującego temperamentu, łączysz cechy wszystkich temperamentów.\r\n";
           this.temperaments.push(tmp[0].characteristic);
           this.temperaments.push(tmp[1].characteristic);
@@ -213,6 +213,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let jobs: Job[] = [];
     let flag: boolean = true;
     for (let item of this.jobs.jobs) {
+      flag=true;
       for (let elem of item.intelligences) {
         if (this.intelligences.indexOf(elem) == -1) {
           flag = false;
@@ -232,7 +233,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     for (let item of jobs) {
       text += "\t- " + item.name + "\r\n";
     }
-    console.log(jobs);
 
     text = this.stringToHtmlString(text);
     return text;
