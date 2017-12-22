@@ -5,8 +5,8 @@ import { Characteristics } from "./home.enums";
 export class Jobs {
     jobs: Job[] = [];
 
-    constructor(json: string) {
-        let obj = JSON.parse(json);
+    constructor(json: any) {
+        let obj = json;
         for (let item of obj.jobs) {
             let temp: Characteristics[] = [];
             for (let i of item.job.temperaments) {

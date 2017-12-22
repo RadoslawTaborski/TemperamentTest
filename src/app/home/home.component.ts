@@ -3,6 +3,7 @@ import { Questions } from './home.questions';
 import { Person, Characteristic } from './home.person';
 import { Characteristics } from './home.enums';
 import { SharedService } from "../shared.service";
+import { JsonService } from "../json.service";
 import { Question } from 'app/home/home.question';
 import { Job, Jobs } from 'app/home/home.jobs';
 
@@ -10,6 +11,7 @@ import { Job, Jobs } from 'app/home/home.jobs';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  providers: [JsonService]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   isLoaded = false;
@@ -28,11 +30,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   intelligences: Characteristics[];
   temperaments: Characteristics[];
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private as:JsonService ,private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.jobs = new Jobs(SharedService.jsonJob);
+    this.as.getJSON("./../assets/jsons/jsonJobs.txt").subscribe(data => {
+      this.jobs = new Jobs(data);
+    });
+
     this.isLoaded = true;
   }
 
@@ -70,11 +75,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.addedAllAnswers = false;
     this.id = 0;
     this.person = new Person();
-    this.questionsArray.ReadJson(SharedService.jsonQuestions);
-    this.question = this.questionsArray.Questions[0];
-    this.intelligences=[];
-    this.temperaments=[];
-    this.showQuestions = true;
+    this.as.getJSON("./../assets/jsons/jsonQuestions.txt").subscribe(data => {
+      this.questionsArray.ReadJson(data);
+      this.question = this.questionsArray.Questions[0];
+      this.intelligences=[];
+      this.temperaments=[];
+      this.showQuestions = true;
+    });
   }
 
   check() {
