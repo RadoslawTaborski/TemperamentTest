@@ -9,9 +9,9 @@ export class Questions {
     temperamentQuestions: number = 0;
     intelligenceQuestions: number = 0;
 
-    ReadJson(json: string) {
+    ReadJson(json: any) {
         this.Questions = [];
-        let obj = JSON.parse(json);
+        let obj = json;
 
         for (let entry of obj.questions){
 
